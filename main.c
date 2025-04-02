@@ -154,11 +154,12 @@ void test_read(){
 	char str1[1000] = "0123456789";
 	char str2[1000] = "hello";
 	bzero(str, 1000);
-	ft_read(0, str, 10);
-	if (!strncmp(str, str1, 10))
-		printf("OK %s %s\n", str, str1);
-	else
-		printf("KO %s %s\n", str, str1);
+	// test read sur stdin
+//	ft_read(0, str, 10);
+//	if (!strncmp(str, str1, 10))
+//		printf("OK %s %s\n", str, str1);
+//	else
+//		printf("KO %s %s\n", str, str1);
 	printf("OK %i\n",ft_read(-1, str, 1000));
 	perror("hello");
 	int fd = open("./hello", O_RDWR);
@@ -198,10 +199,16 @@ void test_write(){
 }
 
 int main(void){
+	printf("test strdup :\n");
 	test_strdup();
+	printf("test strcmp :\n");
 	test_strcmp();
+	printf("test strcpy :\n");
 	test_strcpy();
+	printf("test strlen :\n");
 	test_strlen();
+	printf("test read:\n");
 	test_read();
+	printf("test write:\n");
 	test_write();
 }

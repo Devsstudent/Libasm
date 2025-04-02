@@ -9,7 +9,7 @@ ft_read:
 	jl .error
 	ret
 
-.error:
+.error:                                 ; Handling error
 	neg rax
 	mov rdx, rax
 	call __errno_location wrt ..plt
