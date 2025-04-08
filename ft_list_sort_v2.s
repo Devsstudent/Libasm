@@ -15,7 +15,7 @@ section .text
 ft_list_sort_v2:
 	; Loop 1 sur toutes la list
 	; Loop 2 pour place l'element
-	push rdi
+	;push rdi
 	mov r8, [rdi] ; r8 va etre le registre buffer de la list
 	mov r9, rsi   ; r9 le registre contenant l'addresse de la fonction de comparaison
 	test r8, r8
