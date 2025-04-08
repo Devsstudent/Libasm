@@ -31,7 +31,7 @@ int main(void){
 	ft_list_push_front(&head, (u_int64_t)strdup("A"));
 	ft_list_push_front(&head, (u_int64_t)strdup("B"));
 	ft_list_push_front(&head, (u_int64_t)strdup("C"));
-	ft_list_sort(&head, wrap_strcmp);
+	ft_list_sort_v2(&head, wrap_strcmp);
 	free(head->next->next);
 	free(head->next);
 	free(head);

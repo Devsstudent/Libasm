@@ -24,5 +24,6 @@ char		*ft_strdup(const char *s1);
 unsigned int    ft_list_size(t_list *head);
 void            ft_list_push_front(t_list **head, u_int64_t data);
 void			ft_list_sort(t_list **begin_list, int (*cmp)(u_int64_t, u_int64_t));
+void			ft_list_sort_v2(t_list **begin_list, int (*cmp)(u_int64_t, u_int64_t));
 
 #endif

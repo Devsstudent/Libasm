@@ -2,7 +2,7 @@ NAME=libasm.a
 NASM=nasm -f elf64 -g
 CC=gcc
 
-SFILE=ft_strdup.s ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s ft_read.s ft_list_size.s ft_list_sort.s ft_list_push_front.s
+SFILE=ft_strdup.s ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s ft_read.s ft_list_size.s ft_list_sort.s ft_list_push_front.s ft_list_sort_v2.s
 OFILE=$(SFILE:.s=.o)
 
 all: $(NAME)
