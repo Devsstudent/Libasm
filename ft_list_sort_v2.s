@@ -37,7 +37,7 @@ ft_list_sort_v2:
 	mov rdi, [r8]
 	mov rsi, [r10]
 	call r9
-	cmp rax, 0
+	test eax, eax
 	js .loop2 ; if negative
 	jz .loop2 ; if zero
 	jmp .storing ; store the biggest diff, and its corresponding addr
