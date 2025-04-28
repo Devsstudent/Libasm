@@ -25,5 +25,6 @@ unsigned int    ft_list_size(t_list *head);
 void            ft_list_push_front(t_list **head, u_int64_t data);
 void			ft_list_sort(t_list **begin_list, int (*cmp)(u_int64_t, u_int64_t));
 void			ft_list_sort_v2(t_list **begin_list, int (*cmp)(u_int64_t, u_int64_t));
+void			ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *));
 
 #endif
