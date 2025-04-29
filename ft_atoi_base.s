@@ -25,6 +25,7 @@ section .text
 	cmp %1, %2
 	jz %3
 %endmacro
+
 ;%%label is the label syntax in macro
 
 ft_atoi_base:
@@ -74,8 +75,18 @@ ft_atoi_base:
 		jmp .loop_post
 
 	.end_str:				; End case when everything is good
-		pop r9
-		imul r13, r9
+		pop rax
+		CLEAR_REG rcx
+		CLEAR_REG rdx
+		mov rcx, 2
+		div rcx
+		cmp rdx, 0
+		jne .mul_sign
+		mov rax, r13
+		ret
+
+	.mul_sign:
+		imul r13, -1
 		mov rax, r13
 		ret
 
