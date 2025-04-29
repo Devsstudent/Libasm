@@ -29,19 +29,103 @@ section .text
 
 ft_atoi_base:
 
+	push rdi 
+	push rsi
+
 	mov rdi, rsi 
 	call check_base
-	; Possible to make a macro on the test
-	CMP_A_B_JMP rax, 1, .err
-	ret
+	CMP_A_B_JMP rax, 1, .err  ; if err in base return 0
+ 
+	pop r8					; Will store base into r8
+	mov rdi, r8				; Get back in rdi the base (setup first argument of my function)
+	call get_len_str
+	mov r10, rax				; Store into r10 the len of my base
+	pop rsi					; Get back str into rsi
+	push 0
+	CLEAR_REG r9
+	CLEAR_REG r13
+	.loop_post:
+		lodsb
+		CMP_A_B_JMP al, 32, .loop_post
+		CMP_A_B_JMP al, 43, .loop_post
+		CMP_A_B_JMP al, 45, .is_negative_sign
+		jmp .first_turn
+		
+	.loop_str:
+		lodsb
+	.first_turn:
+		CHECK_ZERO al, .end_str
+		mov dl, al
+		push rsi			; Save rsi current state
+		mov rsi, r8
+		call get_index_elem
+		pop rsi
+		CMP_A_B_JMP rax, -1, .err_loop	; Means the char doesn't exist in the base
+		imul r13, r10
+		add r13, rax
+		jmp .loop_str
+		
+	
+
+	.is_negative_sign:			; If negative sign we add 1 to the pushed reference value that we will use at the end
+		pop r9
+		add r9, 1
+		push r9
+		jmp .loop_post
+
+	.end_str:				; End case when everything is good
+		pop r9
+		imul r13, r9
+		mov rax, r13
+		ret
+
+	.err_loop:
+		pop r9
+		mov rax, 0
+		ret
 
 
 ; case emtpy base ou len(base) = 1
 ; base has duplicate character
 ; base containe whitespace or "+" et "-"
 	.err:
+		pop rdi
+		pop rsi
 		mov rax, 0
 		ret
+
+; rdi elem
+; rsi string
+get_index_elem:					; will use get_index to check if char is in base
+	CLEAR_REG ecx
+	.get_index_elem.loop:
+		lodsb
+		CMP_A_B_JMP al, dl, .get_index_elem.ret
+		add ecx, 1
+		jmp .get_index_elem.loop
+
+		mov rax, -1
+		ret
+
+	.get_index_elem.ret:
+		mov rax, rcx
+		ret
+	
+
+
+get_len_str:
+	mov  rsi, rdi	; put the first argument rdi into rdi
+	CLEAR_REG ecx
+
+	.get_len_str.loop:
+		lodsb
+		CHECK_ZERO al, .get_len_str.ret
+		add ecx, 1
+		jmp .get_len_str.loop
+	.get_len_str.ret:
+		mov eax, ecx
+		ret
+	
 
 check_base:
 	; $rsi c'est ma base
@@ -90,7 +174,7 @@ check_base:
 		mov rax, 1
 		ret
 
-	.check_base.end_good
+	.check_base.end_good:
 		mov rax, 0
 		ret
 
