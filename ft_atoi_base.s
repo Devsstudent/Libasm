@@ -112,9 +112,11 @@ get_index_elem:					; will use get_index to check if char is in base
 	.get_index_elem.loop:
 		lodsb
 		CMP_A_B_JMP al, dl, .get_index_elem.ret
+		CHECK_ZERO al, .index_not_found
 		add ecx, 1
 		jmp .get_index_elem.loop
 
+	.index_not_found:
 		mov rax, -1
 		ret
 

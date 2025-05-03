@@ -9,10 +9,12 @@
 #include <sys/errno.h>
 #include <sys/types.h>
 
-typedef struct s_list{
-	u_int64_t data;
-	struct s_list *next;
-}			t_list;
+typedef struct s_list
+{
+	void	*data;
+	struct	s_list *next;
+}	t_list;
+
 
 
 size_t		ft_strlen(const char *s);
