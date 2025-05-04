@@ -13,6 +13,7 @@ all: $(NAME)
 bonus: $(NAME_BONUS)
 
 $(NAME_BONUS): $(OBONUSFILE)
+	echo $(OBONUSFILE)
 	ar rcs $(NAME_BONUS) $(OBONUSFILE)
 
 $(NAME): $(OFILE)
@@ -32,6 +33,7 @@ fclean:
 	rm -rf *.o
 	rm -rf test
 	rm -rf libasm.a
+	rm -rf libasm_bonus.a
 
 re: fclean all
 

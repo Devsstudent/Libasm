@@ -148,6 +148,12 @@ check_base:
 .check_base.loop:
 	lodsb
 	CHECK_ZERO al, .check_base.end_good
+	CMP_A_B_JMP al, 8, .check_base.end_bad		; check '\b'
+	CMP_A_B_JMP al, 9, .check_base.end_bad		; check '\t'
+	CMP_A_B_JMP al, 10, .check_base.end_bad		; check '\n'
+	CMP_A_B_JMP al, 11, .check_base.end_bad		; check '\v'
+	CMP_A_B_JMP al, 12, .check_base.end_bad		; check '\f'
+	CMP_A_B_JMP al, 13, .check_base.end_bad		; check '\r'
 	CMP_A_B_JMP al, 32, .check_base.end_bad		; check ' '
 	CMP_A_B_JMP al, 43, .check_base.end_bad		; check '+'
 	CMP_A_B_JMP al, 45, .check_base.end_bad		; check '-'

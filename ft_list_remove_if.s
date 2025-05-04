@@ -1,4 +1,5 @@
 
+	extern free
 section .text
 	global ft_list_remove_if
 
@@ -11,7 +12,7 @@ section .text
 ft_list_remove_if:
 	push rdi
 	mov r8, [rdi]	;store the t_list *first_elem into r8
-	mov r9, rdx	;store the comparaison function
+	push rdx
 	mov r12, rcx	;store the free function
 	mov r14, rsi    ;store the data
 	mov r10, r8     ; r10 will be our buffer
@@ -24,7 +25,9 @@ ft_list_remove_if:
 	xor rdi, rdi
 	mov rdi, [r10]
 	mov rsi, r14
-	call r9
+	pop r11
+	call r11
+	push r11
 	test eax, eax	; functoin return a int so only 32 bits
 	jz .remove_node
 	jmp .end_loop
@@ -41,25 +44,31 @@ ft_list_remove_if:
 .remove_node:
 	test r15, r15	; Check if there is a previous
 	jnz .setup_new_next
+	pop r11
 	pop rdi
 	mov r13, [r10 + 8]	; get the next->elem
 	mov [rdi], r13		; set la head a next elem because the first elem is removed
 	push rdi		; on repush la head
-	xor rdi, rdi
+	push r11
 
 .elem_removed:
+	xor rdi, rdi
 	mov rdi, [r10]		; setup argument pour la function
+	push r10
 	call r12		; call la function
-	mov r10, [r10 + 8]      ; setup le next 
+	pop r10
+	mov rdi, r10
+	call free wrt ..plt
+	mov r10, r13      ; setup le next 
 	jmp .loop
 
 .setup_new_next:
 	mov r13, [r10 + 8]	; get then next->elem
 	mov [r15 + 8], r13 ;prev->next = (remove_elem->next)
 	jmp .elem_removed
-	
 
 .end:
+	pop rdx
 	pop rdi
 	ret
 
